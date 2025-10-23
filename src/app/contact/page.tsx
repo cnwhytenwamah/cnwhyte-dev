@@ -1,340 +1,239 @@
 'use client';
 
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Phone, Send, CheckCircle, AlertCircle, Loader } from 'lucide-react';
-import AnimatedSection from '@/components/AnimatedSection';
-import { fadeInUp, fadeInLeft, fadeInRight } from '@/utils/animations';
-import { ContactFormData } from '@/lib/types';
+import { useInView } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { FiMail, FiPhone, FiMapPin, FiSend } from 'react-icons/fi';
+import axios from 'axios';
 
-const ContactPage = () => {
-  const [formData, setFormData] = useState<ContactFormData>({
+const contactInfo = [
+  {
+    icon: FiMail,
+    title: 'Email',
+    value: 'nwamahclinton@gmail.com',
+    href: 'mailto:nwamahclinton@gmail.com',
+  },
+  {
+    icon: FiPhone,
+    title: 'Phone',
+    value: '+234 815-616-6597',
+    href: 'tel:2348156166597',
+  },
+  {
+    icon: FiMapPin,
+    title: 'Location',
+    value: '#1 Jesa avenue off Kreigani rd, Omoku, Rivers State',
+    href: null,
+  },
+];
+
+interface FormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+export default function Contact() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     subject: '',
     message: '',
   });
-  
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('loading');
-    setErrorMessage('');
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
 
     try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await axios.post('/api/contact', formData);
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to send message');
+      if (response.data.success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setSubmitStatus('error');
       }
-
-      setStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => setStatus('idle'), 5000);
     } catch (error) {
-      setStatus('error');
-      setErrorMessage(error instanceof Error ? error.message : 'Something went wrong');
-      
-      // Reset error message after 5 seconds
-      setTimeout(() => setStatus('idle'), 5000);
+      console.error('Error sending message:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const contactInfo = [
-    {
-      icon: <Mail className="w-6 h-6" />,
-      label: 'Email',
-      value: 'your.email@example.com',
-      link: 'mailto:your.email@example.com',
-    },
-    {
-      icon: <Phone className="w-6 h-6" />,
-      label: 'Phone',
-      value: '+1 (555) 123-4567',
-      link: 'tel:+15551234567',
-    },
-    {
-      icon: <MapPin className="w-6 h-6" />,
-      label: 'Location',
-      value: 'Port Harcourt, Nigeria',
-      link: null,
-    },
-  ];
-
   return (
-    <div className="min-h-screen pt-24 pb-16 px-6">
+    <section
+      id="contact"
+      ref={ref}
+      className="py-24 px-6 bg-[#0c0f1a] text-gray-300"
+    >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <AnimatedSection>
-          <motion.h1
-            variants={fadeInUp}
-            className="text-5xl md:text-6xl font-bold mb-6 text-center"
-          >
-            Get In <span className="gradient-text">Touch</span>
-          </motion.h1>
-          <motion.p
-            variants={fadeInUp}
-            className="text-xl text-slate-300 text-center max-w-3xl mx-auto mb-16"
-          >
-            Have a project in mind or just want to chat? I'd love to hear from you!
-          </motion.p>
-        </AnimatedSection>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-5xl font-bold mb-4">
+            Get <span className="text-[#00e0ff]">In Touch</span>
+          </h2>
+          <div className="w-24 h-1 bg-[#00e0ff] mx-auto rounded-full mb-4" />
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+            Have a project in mind or want to collaborate? Drop me a message —
+            I&apos;d love to hear from you.
+          </p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <AnimatedSection>
-            <motion.div variants={fadeInLeft} className="glass p-8 rounded-2xl">
-              <h2 className="text-3xl font-bold mb-6">Send a Message</h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name Input */}
-                <div>
-                  <label htmlFor="name" className="block text-sm font-semibold mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
-                    placeholder="John Doe"
-                  />
-                </div>
-
-                {/* Email Input */}
-                <div>
-                  <label htmlFor="email" className="block text-sm font-semibold mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
-                    placeholder="john@example.com"
-                  />
-                </div>
-
-                {/* Subject Input */}
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-semibold mb-2">
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
-                    placeholder="Project Inquiry"
-                  />
-                </div>
-
-                {/* Message Textarea */}
-                <div>
-                  <label htmlFor="message" className="block text-sm font-semibold mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-blue-500 transition-colors resize-none"
-                    placeholder="Tell me about your project..."
-                  />
-                </div>
-
-                {/* Submit Button */}
-                <motion.button
-                  type="submit"
-                  disabled={status === 'loading'}
-                  whileHover={{ scale: status === 'loading' ? 1 : 1.02 }}
-                  whileTap={{ scale: status === 'loading' ? 1 : 0.98 }}
-                  className={`w-full px-8 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all ${
-                    status === 'loading'
-                      ? 'bg-slate-700 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:shadow-lg hover:shadow-blue-500/50'
-                  }`}
-                >
-                  {status === 'loading' ? (
-                    <>
-                      <Loader className="w-5 h-5 animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5" />
-                      Send Message
-                    </>
-                  )}
-                </motion.button>
-
-                {/* Status Messages */}
-                {status === 'success' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-2 p-4 bg-green-500/20 border border-green-500 rounded-lg text-green-400"
-                  >
-                    <CheckCircle className="w-5 h-5" />
-                    <span>Message sent successfully! I'll get back to you soon.</span>
-                  </motion.div>
-                )}
-
-                {status === 'error' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-2 p-4 bg-red-500/20 border border-red-500 rounded-lg text-red-400"
-                  >
-                    <AlertCircle className="w-5 h-5" />
-                    <span>{errorMessage || 'Failed to send message. Please try again.'}</span>
-                  </motion.div>
-                )}
-              </form>
-            </motion.div>
-          </AnimatedSection>
-
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Contact Info */}
-          <AnimatedSection>
-            <motion.div variants={fadeInRight} className="space-y-6">
-              {/* Info Cards */}
-              <div className="space-y-4">
-                {contactInfo.map((info, index) => (
-                  <motion.div
-                    key={index}
-                    whileHover={{ scale: 1.02, x: 10 }}
-                    className="glass p-6 rounded-xl"
-                  >
-                    {info.link ? (
+          <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="space-y-6"
+          >
+            {contactInfo.map((info, i) => (
+              <motion.div
+                key={info.title}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.3 + i * 0.15 }}
+                whileHover={{ scale: 1.03, y: -3 }}
+                className="bg-[#101424] border border-[#00e0ff]/30 p-6 rounded-2xl shadow-md hover:shadow-[#00e0ff]/20 transition-all"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-[#00e0ff]/10 rounded-lg">
+                    <info.icon className="text-[#00e0ff]" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-white mb-1">
+                      {info.title}
+                    </h3>
+                    {info.href ? (
                       <a
-                        href={info.link}
-                        className="flex items-start gap-4 group"
+                        href={info.href}
+                        className="text-gray-400 hover:text-[#00e0ff] transition-colors"
                       >
-                        <div className="p-3 bg-blue-500/20 rounded-lg text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors">
-                          {info.icon}
-                        </div>
-                        <div>
-                          <div className="text-sm text-slate-400 mb-1">{info.label}</div>
-                          <div className="font-semibold group-hover:text-blue-400 transition-colors">
-                            {info.value}
-                          </div>
-                        </div>
+                        {info.value}
                       </a>
                     ) : (
-                      <div className="flex items-start gap-4">
-                        <div className="p-3 bg-blue-500/20 rounded-lg text-blue-400">
-                          {info.icon}
-                        </div>
-                        <div>
-                          <div className="text-sm text-slate-400 mb-1">{info.label}</div>
-                          <div className="font-semibold">{info.value}</div>
-                        </div>
-                      </div>
+                      <p className="text-gray-400">{info.value}</p>
                     )}
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Availability Card */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="glass p-6 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-2 border-green-500/30"
-              >
-                <div className="flex items-center gap-2 mb-3">
-                  <motion.div
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="w-3 h-3 bg-green-500 rounded-full"
-                  />
-                  <span className="font-semibold text-green-400">Available for Projects</span>
+                  </div>
                 </div>
-                <p className="text-slate-300">
-                  I'm currently available for freelance projects and full-time opportunities.
-                  Let's build something amazing together!
-                </p>
               </motion.div>
+            ))}
 
-              {/* Response Time */}
-              <div className="glass p-6 rounded-xl">
-                <h3 className="font-semibold mb-2">⚡ Quick Response</h3>
-                <p className="text-slate-300 text-sm">
-                  I typically respond within 24 hours. For urgent matters, 
-                  feel free to reach out via phone.
-                </p>
-              </div>
+            {/* Quick Fact / CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              whileHover={{ scale: 1.03 }}
+              className="bg-gradient-to-br from-[#00c4e6] to-[#00e0ff] p-6 rounded-2xl text-[#0c0f1a] shadow-lg"
+            >
+              <h3 className="text-xl font-bold mb-2">Let&apos;s Collaborate</h3>
+              <p className="opacity-90">
+                Always open to discussing exciting ideas, new projects, or long-term partnerships.
+              </p>
             </motion.div>
-          </AnimatedSection>
-        </div>
-
-        {/* FAQ Section */}
-        <AnimatedSection className="mt-20">
-          <motion.div variants={fadeInUp} className="glass p-8 rounded-2xl">
-            <h2 className="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {[
-                {
-                  q: "What's your typical response time?",
-                  a: "I aim to respond to all inquiries within 24 hours during business days."
-                },
-                {
-                  q: "Do you work with international clients?",
-                  a: "Yes! I work with clients globally across different time zones."
-                },
-                {
-                  q: "What's your project minimum?",
-                  a: "I typically work on projects starting from $2,000, but I'm flexible for interesting opportunities."
-                },
-                {
-                  q: "Do you offer ongoing support?",
-                  a: "Yes, I provide maintenance and support packages for completed projects."
-                },
-              ].map((faq, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.02 }}
-                  className="p-4 bg-slate-800/50 rounded-lg"
-                >
-                  <h4 className="font-semibold mb-2 text-blue-400">{faq.q}</h4>
-                  <p className="text-slate-300 text-sm">{faq.a}</p>
-                </motion.div>
-              ))}
-            </div>
           </motion.div>
-        </AnimatedSection>
-      </div>
-    </div>
-  );
-};
 
-export default ContactPage;
+          {/* Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="lg:col-span-2"
+          >
+            <form
+              onSubmit={handleSubmit}
+              className="bg-[#101424] border border-[#00e0ff]/30 p-8 rounded-2xl shadow-lg hover:shadow-[#00e0ff]/20 transition-all duration-300"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label className="block text-sm text-gray-400 mb-2">Name</label>
+                  <input type="text" name="name" value={formData.name} onChange={handleChange} required className="w-full px-4 py-3 rounded-lg bg-[#0c0f1a] border border-[#00e0ff]/20 text-gray-200 focus:ring-2 focus:ring-[#00e0ff] outline-none transition-all" placeholder="John Amaka"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-2">Email</label>
+                  <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full px-4 py-3 rounded-lg bg-[#0c0f1a] border border-[#00e0ff]/20 text-gray-200 focus:ring-2 focus:ring-[#00e0ff] outline-none transition-all" placeholder="john@gmail.com"/>
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <label className="block text-sm text-gray-400 mb-2">Subject</label>
+                <input type="text" name="subject" value={formData.subject} onChange={handleChange} required className="w-full px-4 py-3 rounded-lg bg-[#0c0f1a] border border-[#00e0ff]/20 text-gray-200 focus:ring-2 focus:ring-[#00e0ff] outline-none transition-all" placeholder="Project Inquiry"/>
+              </div>
+
+              <div className="mb-6">
+                <label className="block text-sm text-gray-400 mb-2">Message</label>
+                <textarea name="message" value={formData.message} onChange={handleChange} required rows={6} className="w-full px-4 py-3 rounded-lg bg-[#0c0f1a] border border-[#00e0ff]/20 text-gray-200 focus:ring-2 focus:ring-[#00e0ff] outline-none transition-all resize-none" placeholder="Tell me about your project..."
+                />
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00c4e6] to-[#00e0ff] text-[#0c0f1a] font-semibold rounded-lg shadow-lg hover:shadow-[#00e0ff]/40 transition-all duration-300 disabled:opacity-50"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-[#0c0f1a] border-t-transparent rounded-full animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    Send Message
+                    <FiSend size={18} />
+                  </>
+                )}
+              </motion.button>
+
+              {submitStatus === 'success' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 p-4 bg-green-900/20 border border-green-500/30 text-green-400 rounded-lg"
+                >
+                  Thanks for reaching out! I will get back to you soon.
+                </motion.div>
+              )}
+
+              {submitStatus === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 p-4 bg-red-900/20 border border-red-500/30 text-red-400 rounded-lg"
+                >
+                  Something went wrong. Please try again later.
+                </motion.div>
+              )}
+            </form>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}

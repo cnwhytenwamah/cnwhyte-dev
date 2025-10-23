@@ -2,15 +2,14 @@ import { Project, Skill, SocialLink } from './types';
 
 export const projects: Project[] = [
   {
-    id: '1',
-    title: "Your Project Name",
-    description: "Brief description",
-    longDescription: "Detailed description",
-    tech: ["Next.js", "TypeScript", "Tailwind"],
-    image: "🚀", // Use emoji or replace with actual images later
-    github: "https://github.com/yourusername/project",
-    live: "https://yourproject.com",
-    featured: true
+    id: "1",
+    title: 'Pepend Blog',
+    description:
+      'A modern blogging platform featuring rich text editing, authentication, SEO optimization, and a clean UI for reading and writing posts.',
+    technologies: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Tailwind CSS'],
+    github: 'https://github.com/nwamahclinton/pepend-blog',
+    demo: 'https://pepend.vercel.app',
+    image: '/images/projects/pepend.png',
   },
   // Add more projects...
 ];

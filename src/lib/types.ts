@@ -2,12 +2,10 @@ export interface Project {
   id: string;
   title: string;
   description: string;
-  longDescription?: string;
-  tech: string[];
+  technologies: string[];
+  demo: string;
   image: string;
   github?: string;
-  live?: string;
-  featured: boolean;
 }
 
 export interface Skill {

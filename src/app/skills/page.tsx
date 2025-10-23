@@ -1,237 +1,144 @@
 'use client';
 
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Code, Smartphone, Database, Wrench, ChevronRight } from 'lucide-react';
-import AnimatedSection from '@/components/AnimatedSection';
-import { skills } from '@/lib/data';
-import { fadeInUp, fadeInLeft, staggerContainer } from '@/utils/animations';
+import { useInView } from 'framer-motion';
+import { useRef } from 'react';
+import {
+  SiReact, SiNextdotjs, SiTypescript,
+  SiTailwindcss, SiGit, SiFigma, SiJest, SiFirebase, SiVercel, SiNetlify
+} from 'react-icons/si';
 
-const SkillsPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+const skillCategories = [
+  {
+    category: 'Frontend',
+    skills: [
+      { name: 'React', icon: SiReact, level: 95, color: 'text-[#00e0ff]' },
+      { name: 'Next.js', icon: SiNextdotjs, level: 90, color: 'text-white' },
+      { name: 'TypeScript', icon: SiTypescript, level: 90, color: 'text-[#00e0ff]' },
+      { name: 'Tailwind CSS', icon: SiTailwindcss, level: 95, color: 'text-[#00e0ff]' },
+    ],
+  },
+  {
+    category: 'Tools & Platforms',
+    skills: [
+      { name: 'Git', icon: SiGit, level: 90, color: 'text-[#00e0ff]' },
+      { name: 'Firebase', icon: SiFirebase, level: 85, color: 'text-[#00e0ff]' },
+      { name: 'Vercel', icon: SiVercel, level: 80, color: 'text-white' },
+      { name: 'Netlify', icon: SiNetlify, level: 80, color: 'text-[#00e0ff]' },
+    ],
+  },
+  {
+    category: 'Design & Testing',
+    skills: [
+      { name: 'Figma', icon: SiFigma, level: 80, color: 'text-[#00e0ff]' },
+      { name: 'Jest', icon: SiJest, level: 75, color: 'text-[#00e0ff]' },
+    ],
+  },
+];
 
-  const categories = {
-    all: { icon: <Code />, label: 'All Skills', color: 'blue' },
-    frontend: { icon: <Code />, label: 'Frontend', color: 'blue' },
-    mobile: { icon: <Smartphone />, label: 'Mobile', color: 'purple' },
-    backend: { icon: <Database />, label: 'Backend', color: 'green' },
-    tools: { icon: <Wrench />, label: 'Tools', color: 'orange' },
-  };
-
-  const filteredSkills = selectedCategory === 'all' 
-    ? skills 
-    : skills.filter(skill => skill.category === selectedCategory);
-
-  const categoryColors: Record<string, string> = {
-    frontend: 'from-blue-500 to-cyan-500',
-    mobile: 'from-purple-500 to-pink-500',
-    backend: 'from-green-500 to-emerald-500',
-    tools: 'from-orange-500 to-yellow-500',
-  };
+export default function Skills() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-6">
+    <section
+      id="skills"
+      ref={ref}
+      className="py-24 px-6 bg-[#0c0f1a] text-gray-300"
+    >
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <AnimatedSection>
-          <motion.h1
-            variants={fadeInUp}
-            className="text-5xl md:text-6xl font-bold mb-6 text-center"
-          >
-            Skills & <span className="gradient-text">Expertise</span>
-          </motion.h1>
-          <motion.p
-            variants={fadeInUp}
-            className="text-xl text-slate-300 text-center max-w-3xl mx-auto mb-16"
-          >
-            Technologies and tools I use to bring ideas to life
-          </motion.p>
-        </AnimatedSection>
-
-        {/* Category Filter */}
-        <AnimatedSection className="mb-16">
-          <div className="grid grid-cols-2 md:flex md:justify-center gap-4">
-            {Object.entries(categories).map(([key, { icon, label }]) => (
-              <motion.button
-                key={key}
-                whileHover={{ scale: 1.05, y: -3 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setSelectedCategory(key)}
-                className={`flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all ${
-                  selectedCategory === key
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/50'
-                    : 'glass hover:bg-slate-800'
-                }`}
-              >
-                {icon}
-                <span className="hidden md:inline">{label}</span>
-              </motion.button>
-            ))}
-          </div>
-        </AnimatedSection>
-
-        {/* Skills Grid */}
+        {/* Section Header */}
         <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="grid md:grid-cols-2 gap-6 mb-16"
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
         >
-          {filteredSkills.map((skill, index) => (
+          <h2 className="text-5xl font-bold mb-4">
+            Frontend <span className="text-[#00e0ff]">Skills</span>
+          </h2>
+          <div className="w-24 h-1 bg-[#00e0ff] mx-auto rounded-full mb-4" />
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            Tools and technologies I use to craft responsive, modern, and interactive experiences.
+          </p>
+        </motion.div>
+
+        {/* Skill Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {skillCategories.map((category, i) => (
             <motion.div
-              key={skill.name}
-              variants={fadeInUp}
-              custom={index}
+              key={category.category}
+              initial={{ opacity: 0, y: 60 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: i * 0.2 }}
               whileHover={{ scale: 1.02 }}
-              className="glass p-6 rounded-xl"
+              className="bg-[#101424] border border-[#00e0ff]/30 rounded-2xl shadow-lg p-8 hover:shadow-[#00e0ff]/20 transition-all duration-300"
             >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-semibold">{skill.name}</h3>
-                <span className="text-2xl font-bold gradient-text">
-                  {skill.level}%
-                </span>
-              </div>
-
-              {/* Progress Bar */}
-              <div className="relative w-full bg-slate-700 rounded-full h-3 overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: index * 0.1, ease: 'easeOut' }}
-                  className={`h-full bg-gradient-to-r ${
-                    categoryColors[skill.category] || 'from-blue-500 to-purple-600'
-                  } relative`}
-                >
-                  <motion.div
-                    animate={{ 
-                      x: [0, 100, 0],
-                      opacity: [0.5, 1, 0.5]
-                    }}
-                    transition={{ 
-                      duration: 2, 
-                      repeat: Infinity,
-                      ease: 'linear'
-                    }}
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                  />
-                </motion.div>
-              </div>
-
-              {/* Category Badge */}
-              <div className="mt-3">
-                <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${
-                  categoryColors[skill.category] || 'from-blue-500 to-purple-600'
-                } bg-opacity-20`}>
-                  {skill.category}
-                </span>
+              <h3 className="text-2xl font-semibold text-[#00e0ff] mb-6">{category.category}</h3>
+              <div className="space-y-6">
+                {category.skills.map((skill, index) => (
+                  <div key={skill.name}>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-3">
+                        <skill.icon className={`${skill.color}`} size={26} />
+                        <span className="font-medium text-gray-300">{skill.name}</span>
+                      </div>
+                      <span className="text-sm text-gray-400">{skill.level}%</span>
+                    </div>
+                    <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={isInView ? { width: `${skill.level}%` } : {}}
+                        transition={{
+                          duration: 1,
+                          delay: i * 0.2 + index * 0.1,
+                        }}
+                        className="h-full bg-gradient-to-r from-[#00c4e6] to-[#00e0ff] rounded-full shadow-[0_0_8px_#00e0ff]"
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* Additional Skills */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-20 text-center"
+        >
+          <h3 className="text-3xl font-semibold text-[#00e0ff] mb-8">
+            Also Experienced With
+          </h3>
+          <div className="flex flex-wrap justify-center gap-4">
+            {[
+              'Redux',
+              'Zustand',
+              'Framer Motion',
+              'REST API',
+              'Responsive Design',
+              'Accessibility (a11y)',
+              'React Hook Form',
+              'Styled Components',
+              'Sass',
+              'ESLint & Prettier',
+              'Vite',
+              'Storybook',
+            ].map((skill) => (
+              <motion.span
+                key={skill}
+                whileHover={{ scale: 1.1, y: -2 }}
+                className="px-4 py-2 border border-[#00e0ff]/40 rounded-full text-gray-300 hover:bg-[#00e0ff] hover:text-[#0c0f1a] transition-all duration-300 shadow-sm hover:shadow-[#00e0ff]/40"
+              >
+                {skill}
+              </motion.span>
+            ))}
+          </div>
         </motion.div>
-
-        {/* Tech Stack Overview */}
-        <AnimatedSection>
-          <motion.div
-            variants={fadeInLeft}
-            className="glass p-8 rounded-2xl"
-          >
-            <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
-              <Code className="w-8 h-8 text-blue-400" />
-              My Tech Stack
-            </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Frontend */}
-              <div>
-                <h3 className="text-xl font-semibold mb-4 text-blue-400 flex items-center gap-2">
-                  <ChevronRight className="w-5 h-5" />
-                  Frontend Development
-                </h3>
-                <ul className="space-y-2 text-slate-300">
-                  <li>• React.js & Next.js for modern web apps</li>
-                  <li>• TypeScript for type-safe code</li>
-                  <li>• Tailwind CSS for rapid styling</li>
-                  <li>• Framer Motion for smooth animations</li>
-                  <li>• Redux & Zustand for state management</li>
-                </ul>
-              </div>
-
-              {/* Mobile */}
-              <div>
-                <h3 className="text-xl font-semibold mb-4 text-purple-400 flex items-center gap-2">
-                  <ChevronRight className="w-5 h-5" />
-                  Mobile Development
-                </h3>
-                <ul className="space-y-2 text-slate-300">
-                  <li>• React Native for cross-platform apps</li>
-                  <li>• Expo for rapid development</li>
-                  <li>• Native modules integration</li>
-                  <li>• Push notifications & deep linking</li>
-                  <li>• App Store & Play Store deployment</li>
-                </ul>
-              </div>
-
-              {/* Backend */}
-              <div>
-                <h3 className="text-xl font-semibold mb-4 text-green-400 flex items-center gap-2">
-                  <ChevronRight className="w-5 h-5" />
-                  Backend & Database
-                </h3>
-                <ul className="space-y-2 text-slate-300">
-                  <li>• Node.js & Express.js</li>
-                  <li>• PostgreSQL & MongoDB</li>
-                  <li>• RESTful API design</li>
-                  <li>• Firebase & Supabase</li>
-                  <li>• Authentication & authorization</li>
-                </ul>
-              </div>
-
-              {/* Tools */}
-              <div>
-                <h3 className="text-xl font-semibold mb-4 text-orange-400 flex items-center gap-2">
-                  <ChevronRight className="w-5 h-5" />
-                  Tools & Workflow
-                </h3>
-                <ul className="space-y-2 text-slate-300">
-                  <li>• Git & GitHub for version control</li>
-                  <li>• VS Code with custom setup</li>
-                  <li>• Figma for design collaboration</li>
-                  <li>• Docker for containerization</li>
-                  <li>• CI/CD pipelines (GitHub Actions)</li>
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatedSection>
-
-        {/* Learning Section */}
-        <AnimatedSection className="mt-12">
-          <motion.div
-            variants={fadeInUp}
-            className="glass p-8 rounded-2xl text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/30"
-          >
-            <div className="text-5xl mb-4">🚀</div>
-            <h2 className="text-3xl font-bold mb-4">Always Learning</h2>
-            <p className="text-slate-300 mb-6 max-w-2xl mx-auto">
-              Technology evolves rapidly, and so do I. I'm constantly exploring new tools, 
-              frameworks, and best practices to stay at the cutting edge of web development.
-            </p>
-            <div className="flex flex-wrap gap-3 justify-center">
-              {['Web3', 'AI/ML', 'WebAssembly', 'Rust', 'Three.js'].map((tech) => (
-                <motion.span
-                  key={tech}
-                  whileHover={{ scale: 1.1, y: -3 }}
-                  className="px-4 py-2 bg-slate-800 rounded-full text-sm font-semibold"
-                >
-                  {tech}
-                </motion.span>
-              ))}
-            </div>
-          </motion.div>
-        </AnimatedSection>
       </div>
-    </div>
+    </section>
   );
-};
-
-export default SkillsPage;
+}

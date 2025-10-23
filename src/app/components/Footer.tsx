@@ -26,22 +26,22 @@ const Footer = () => {
             <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/" className="text-gray-400 hover:text-gray-200 transition-colors">
+                <Link href="/" className="text-gray-400 hover:text-[#00c4e6] transition-colors">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-gray-400 hover:text-gray-200 transition-colors">
+                <Link href="/about" className="text-gray-400 hover:text-[#00c4e6] transition-colors">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/projects" className="text-gray-400 hover:text-gray-200 transition-colors">
+                <Link href="/projects" className="text-gray-400 hover:text-[#00c4e6] transition-colors">
                   Projects
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-400 hover:text-gray-200 transition-colors">
+                <Link href="/contact" className="text-gray-400 hover:text-[#00c4e6] transition-colors">
                   Contact
                 </Link>
               </li>
@@ -55,7 +55,7 @@ const Footer = () => {
                 href="https://github.com/yourusername"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-gray-200 transition-colors"
+                className="text-gray-400 hover:text-[#00c4e6] transition-colors"
               >
                 GitHub
               </a>
@@ -63,7 +63,7 @@ const Footer = () => {
                 href="https://linkedin.com/in/yourusername"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-gray-200 transition-colors"
+                className="text-gray-400 hover:text-[#00c4e6] transition-colors"
               >
                 LinkedIn
               </a>
@@ -71,7 +71,7 @@ const Footer = () => {
                 href="https://twitter.com/cnwhyte"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-gray-200 transition-colors"
+                className="text-gray-400 hover:text-[#00c4e6] transition-colors"
               >
                 Twitter
               </a>
