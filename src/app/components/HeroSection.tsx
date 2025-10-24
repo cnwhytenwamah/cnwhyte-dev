@@ -23,12 +23,12 @@ export default function HeroSection() {
           transition={{ duration: 0.8 }}
           className="text-center md:text-left"
         >
-          <p className="text-lg text-gray-300 mb-2">Hello, It's Me</p>
+          <p className="text-lg text-gray-300 mb-2">Hello, It&apos;s Me</p>
           <h1 className="text-5xl sm:text-6xl font-extrabold text-white mb-2">
             Nwamah Clinton
           </h1>
           <h2 className="text-2xl sm:text-3xl mb-6">
-            And I'm a{' '}
+            And I&apos;m a{' '}
             <span className="text-[#00e0ff] font-semibold">
               Frontend Developer
             </span>

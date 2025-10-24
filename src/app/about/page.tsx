@@ -157,7 +157,7 @@ const AboutPage = () => {
               <h2 className="text-3xl font-bold mb-6 text-white">My Story</h2>
               <div className="space-y-4 text-gray-400 text-lg leading-relaxed">
                 <p>
-                  I'm a passionate frontend developer with over 5 years of experience creating
+                  I am a passionate frontend developer with over 5 years of experience creating
                   exceptional digital experiences. My journey in web development started with a
                   curiosity about how websites work, which quickly evolved into a deep love for
                   building intuitive, performant applications.
@@ -166,7 +166,7 @@ const AboutPage = () => {
                   Specializing in{' '}
                   <span className="text-[#00e0ff] font-semibold">React</span>,{' '}
                   <span className="text-[#00e0ff] font-semibold">Next.js</span>, and{' '}
-                  <span className="text-[#00e0ff] font-semibold">React Native</span>, I've had
+                  <span className="text-[#00e0ff] font-semibold">React Native</span>, I&apos;ve had
                   the opportunity to work on diverse projects ranging from e-commerce platforms
                   to mobile applications used by thousands of users.
                 </p>
@@ -176,8 +176,8 @@ const AboutPage = () => {
                   beautiful user interfaces that provide seamless experiences across all devices.
                 </p>
                 <p>
-                  When I'm not coding, you'll find me contributing to open source projects,
-                  writing technical articles, or exploring the latest web technologies. I'm
+                  When I am not coding, you will find me contributing to open source projects,
+                  writing technical articles, or exploring the latest web technologies. I am
                   always eager to learn and share knowledge with the developer community.
                 </p>
               </div>

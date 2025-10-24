@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     const data = await resend.emails.send({
       from: process.env.EMAIL_FROM!,
       to: process.env.EMAIL_TO!,  
-      subject: `Portfolio Contact: ${subject}`,
+      subject: `Cnwhyte Dev: ${subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; color: #333;">
           <h2>New Contact Form Submission</h2>

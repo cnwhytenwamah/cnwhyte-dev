@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { FiGithub, FiExternalLink } from 'react-icons/fi'
+import ImageComponent from '../components/ImageComponent'
 
 const projects = [
   {
@@ -76,10 +77,12 @@ export default function Projects() {
             >
               {/* Image Area */}
               <div className="relative h-48 overflow-hidden group">
-                <img
+                <ImageComponent
                   src={project.image}
                   alt={project.title}
                   className="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                  width={600}
+                  height={400}
                 />
                 <motion.div
                   className="absolute inset-0 bg-[#00e0ff]/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm"
