@@ -52,7 +52,6 @@ const AboutPage = () => {
   return (
     <div className="min-h-screen bg-[#0c0f1a] pt-24 pb-16 px-6 text-gray-300">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <AnimatedSection>
           <motion.h1
             variants={fadeInUp}
@@ -71,7 +70,6 @@ const AboutPage = () => {
         <div className="grid md:grid-cols-2 gap-12 mb-20">
           <AnimatedSection>
             <motion.div variants={fadeInLeft}>
-              {/* Profile Image */}
               <motion.div
                 className="relative mb-8"
                 initial={{ opacity: 0, scale: 0.9, y: 30 }}
@@ -101,7 +99,6 @@ const AboutPage = () => {
                 </motion.div>
               </motion.div>
 
-              {/* Quick Facts */}
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -122,7 +119,6 @@ const AboutPage = () => {
                   <li>▹ Always learning & improving</li>
                 </ul>
 
-                {/* Social Links */}
                 <div className="flex gap-4 mt-6">
                   {[Github, Linkedin, Mail].map((Icon, i) => (
                     <motion.a
@@ -138,7 +134,6 @@ const AboutPage = () => {
                   ))}
                 </div>
 
-                {/* Download CV Button */}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -151,7 +146,6 @@ const AboutPage = () => {
             </motion.div>
           </AnimatedSection>
 
-          {/* Right Column */}
           <AnimatedSection>
             <motion.div variants={fadeInRight}>
               <h2 className="text-3xl font-bold mb-6 text-white">My Story</h2>
@@ -185,7 +179,6 @@ const AboutPage = () => {
           </AnimatedSection>
         </div>
 
-        {/* Achievements Section */}
         <AnimatedSection className="mb-20">
           <h2 className="text-3xl font-bold mb-8 text-center text-white">Achievements</h2>
           <motion.div
@@ -209,7 +202,6 @@ const AboutPage = () => {
           </motion.div>
         </AnimatedSection>
 
-        {/* Timeline */}
         <AnimatedSection>
           <h2 className="text-3xl font-bold mb-12 text-center text-white">My Journey</h2>
           <div className="relative">

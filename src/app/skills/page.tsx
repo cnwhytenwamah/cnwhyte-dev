@@ -47,7 +47,6 @@ export default function Skills() {
       className="py-24 px-6 bg-[#0c0f1a] text-gray-300"
     >
       <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -63,7 +62,6 @@ export default function Skills() {
           </p>
         </motion.div>
 
-        {/* Skill Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {skillCategories.map((category, i) => (
             <motion.div
@@ -103,7 +101,6 @@ export default function Skills() {
           ))}
         </div>
 
-        {/* Additional Skills */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -115,8 +112,6 @@ export default function Skills() {
           </h3>
           <div className="flex flex-wrap justify-center gap-4">
             {[
-              'Redux',
-              'Zustand',
               'Framer Motion',
               'REST API',
               'Responsive Design',

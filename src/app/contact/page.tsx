@@ -84,7 +84,6 @@ export default function Contact() {
       className="py-24 px-6 bg-[#0c0f1a] text-gray-300"
     >
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -101,9 +100,7 @@ export default function Contact() {
           </p>
         </motion.div>
 
-        {/* Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -60 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -142,7 +139,6 @@ export default function Contact() {
               </motion.div>
             ))}
 
-            {/* Quick Fact / CTA */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -157,7 +153,6 @@ export default function Contact() {
             </motion.div>
           </motion.div>
 
-          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: 60 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}

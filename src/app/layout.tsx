@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   description: 'Portfolio website showcasing my work as a full stack developer',
   keywords: ['developer', 'portfolio', 'web development', 'next.js'],
   authors: [{ name: 'Nwamah Clinton' }],
+  icons: {
+    icon: '/favicon.ico',
+  },
   openGraph: {
     title: 'Nwamah Clinton - Frontend Developer',
     description: 'Portfolio website showcasing my work',
