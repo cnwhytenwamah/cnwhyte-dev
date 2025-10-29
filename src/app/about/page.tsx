@@ -2,33 +2,60 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Download, Briefcase, GraduationCap, Award, Linkedin, Github } from 'lucide-react';
+import { Mail, Download, Briefcase, GraduationCap, Award, Linkedin, Github, Twitter } from 'lucide-react';
 import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer } from '@/utils/animations';
 import AnimatedSection from '../components/AnimatedSection';
 import ImageComponent from '../components/ImageComponent';
 
 const AboutPage = () => {
+  const socialLinks = [
+    {
+      icon: Github,
+      href: 'https://github.com/cnwhytenwamah',
+      label: 'GitHub',
+      color: 'hover:text-gray-900',
+    },
+    {
+      icon: Linkedin,
+      href: '#',
+      label: 'LinkedIn',
+      color: 'hover:text-[#0077b5]',
+    },
+    {
+      icon: Twitter,
+      href: 'https://twitter.com/cnwhyte',
+      label: 'Twitter',
+      color: 'hover:text-[#1da1f2]',
+    },
+    {
+      icon: Mail,
+      href: 'nwamahclinton@gmail.com',
+      label: 'Email',
+      color: 'hover:text-red-500',
+    },
+  ];
+
   const timeline = [
     {
-      year: '2024',
+      year: '2023-Till date',
       title: 'Senior Frontend Developer',
-      company: 'Tech Company',
+      company: 'EDUREMAISOFT TECHNOLOGIES LIMITED ',
       description:
         'Leading frontend development team, building scalable React applications and mentoring junior developers.',
       icon: <Briefcase className="w-5 h-5" />,
     },
     {
-      year: '2022',
+      year: '2021-2023',
       title: 'Frontend Developer',
-      company: 'Startup Inc',
+      company: 'LISTACC',
       description:
         'Developed mobile-first web applications using React and Next.js. Implemented design systems and component libraries.',
       icon: <Briefcase className="w-5 h-5" />,
     },
     {
-      year: '2020',
+      year: '2019-2021',
       title: 'Junior Developer',
-      company: 'Digital Agency',
+      company: 'WHITE CREATIVITY',
       description:
         'Started career building responsive websites and learning modern JavaScript frameworks.',
       icon: <Briefcase className="w-5 h-5" />,
@@ -59,6 +86,7 @@ const AboutPage = () => {
           >
             About <span className="text-[#00e0ff]">Me</span>
           </motion.h1>
+          <div className="w-24 h-1 bg-[#00e0ff] mx-auto rounded-full mb-4" />
           <motion.p
             variants={fadeInUp}
             className="text-xl text-gray-400 text-center max-w-3xl mx-auto mb-16"
@@ -114,34 +142,39 @@ const AboutPage = () => {
                 <h3 className="text-2xl font-bold mb-4 text-white">Quick Facts</h3>
                 <ul className="space-y-3 text-gray-400">
                   <li>▹ 5+ years of development experience</li>
-                  <li>▹ 50+ projects completed</li>
+                  <li>▹ 25+ projects completed</li>
                   <li>▹ Open source contributor</li>
                   <li>▹ Always learning & improving</li>
                 </ul>
 
                 <div className="flex gap-4 mt-6">
-                  {[Github, Linkedin, Mail].map((Icon, i) => (
+                  {socialLinks.map((social, i) => (
                     <motion.a
                       key={i}
                       whileHover={{ scale: 1.1, y: -3 }}
-                      href="#"
+                      whileTap={{ scale: 0.95 }}
+                      href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-3 rounded-full border border-[#00e0ff] text-[#00e0ff] hover:bg-[#00e0ff] hover:text-[#0c0f1a] transition-all duration-300"
+                      aria-label={social.label}
+                      title={social.label}
                     >
-                      <Icon className="w-6 h-6" />
+                      <social.icon className="w-6 h-6" />
                     </motion.a>
                   ))}
                 </div>
 
-                <motion.button
+                <motion.a
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  href="/resume/clinton_c_nwamah_front-end_resume.pdf" 
+                  download="Nwamah_Clinton_CV.pdf"
                   className="w-full mt-6 px-6 py-3 bg-[#00e0ff] text-[#0c0f1a] rounded-full font-semibold shadow-lg hover:bg-[#00c4e6] transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   <Download className="w-5 h-5" />
                   Download CV
-                </motion.button>
+                </motion.a>
               </motion.div>
             </motion.div>
           </AnimatedSection>

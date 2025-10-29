@@ -6,15 +6,15 @@ import { FiGithub, FiLinkedin, FiTwitter, FiMail } from 'react-icons/fi'
 import ImageComponent from './ImageComponent'
 
 const socialLinks = [
-  { icon: FiGithub, href: 'https://github.com', label: 'GitHub' },
-  { icon: FiTwitter, href: 'https://twitter.com', label: 'Twitter' },
-  { icon: FiMail, href: 'mailto:hello@example.com', label: 'Email' },
-  { icon: FiLinkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
+  { icon: FiGithub, href: 'https://github.com/cnwhytenwamah', label: 'GitHub' },
+  { icon: FiTwitter, href: 'https://twitter.com/cnwhyte', label: 'Twitter' },
+  { icon: FiMail, href: 'nwamahclinton@gmail.com', label: 'Email' },
+  { icon: FiLinkedin, href: '#', label: 'LinkedIn' },
 ]
 
 export default function HeroSection() {
   return (
-    <section className="min-h-screen bg-[#0c0f1a] flex items-center justify-center px-6">
+    <section className="min-h-screen bg-[#0c0f1a] flex items-center justify-center px-6 py-[20px]">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center text-white">
         
         <motion.div
@@ -56,12 +56,13 @@ export default function HeroSection() {
             ))}
           </div>
 
-          <Link
-            href="/cv.pdf"
+          <a
+            href="/resume/clinton_c_nwamah_front-end_resume.pdf"
+            download="Nwamah_Clinton_CV.pdf"
             className="inline-block px-8 py-3 bg-[#00e0ff] text-[#0c0f1a] font-semibold rounded-full shadow-lg hover:bg-[#00c4e6] transition-all duration-300"
           >
             Download CV
-          </Link>
+          </a>
         </motion.div>
 
         <motion.div

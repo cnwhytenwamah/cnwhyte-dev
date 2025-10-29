@@ -12,8 +12,8 @@ const projects = [
     description:
       'A modern blogging platform featuring rich text editing, authentication, SEO optimization, and a clean UI for reading and writing posts.',
     technologies: ['Next.js', 'TypeScript', 'Laravel', 'MySql', 'Tailwind CSS'],
-    github: 'https://github.com/nwamahclinton/pepend-blog',
-    demo: 'https://pepend.vercel.app',
+    github: '#',
+    demo: 'https://perpend.elmi.com.ng/',
     image: '/images/logo-header.webp',
   },
   {
@@ -21,27 +21,27 @@ const projects = [
     description:
       'A responsive and animated portfolio showcasing my projects, experience, and skills — built with a focus on performance and visual appeal.',
     technologies: ['Next.js', 'TypeScript', 'Framer Motion', 'Tailwind CSS'],
-    github: 'https://github.com/nwamahclinton/portfolio',
-    demo: 'https://cnwhyte.vercel.app',
+    github: 'https://github.com/cnwhytenwamah/cnwhyte-dev',
+    demo: 'https://cnwhyte-dev.vercel.app',
     image: '/images/logo.jpg',
   },
   {
-    title: 'E-Commerce Platform',
+    title: 'Elmi Portal',
     description:
-      'A full-stack e-commerce application with product management, shopping cart, checkout flow, and admin dashboard.',
-    technologies: ['Next.js', 'TypeScript', 'PostgreSQL', 'Stripe', 'Tailwind CSS'],
-    github: 'https://github.com/nwamahclinton/ecommerce',
-    demo: 'https://ecommerce-demo.com',
-    image: '/images/projects/ecommerce.png',
+      'A student management portal built for a Bible institute, featuring student registration, authentication, attendance tracking, and course management.',
+    technologies: ['Laravel', 'MySQL', 'Blade', 'Tailwind CSS', 'JavaScript'],
+    github: '#',
+    demo: 'https://elmi.com.ng',
+    image: '/images/elmi_portal.jpg',
   },
   {
     title: 'Remaivote',
     description:
       'An electronic voting system developed for the NBA Omoku Branch to conduct their E-election. It ensures secure authentication, transparent vote counting, and a smooth voting experience.',
     technologies: ['Next.js', 'TypeScript', 'Laravel', 'MySQL', 'Tailwind CSS'],
-    github: 'https://github.com/nwamahclinton/remaivote',
-    demo: 'https://remaivote.vercel.app',
-    image: '/images/projects/remaivote.png',
+    github: '#',
+    demo: '#',
+    image: '/images/Remaivote.png',
   },
 ]
 

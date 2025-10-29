@@ -6,7 +6,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-900 text-gray-100 py-12">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6 pt-5">
         <div className="grid gap-10 md:grid-cols-3 mb-10">
           <div>
             <ImageComponent
@@ -60,7 +60,7 @@ const Footer = () => {
                 GitHub
               </a>
               <a
-                href="https://linkedin.com/in/yourusername"
+                href="#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-[#00c4e6] transition-colors"
